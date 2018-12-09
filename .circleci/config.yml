@@ -18,7 +18,6 @@ jobs:
             - vendor
       - run: composer validate --strict
       - run: vendor/bin/parallel-lint --short src tests
-      - run: vendor/bin/security-checker security:check
       - run: mkdir ~/reports
       - run: vendor/bin/phpunit --log-junit ~/reports/phpunit.xml
       - store-test-results:
@@ -51,6 +50,7 @@ workflows:
   commit:
     jobs:
       - build
+      - security-check
   security-check:
     triggers:
       - schedule:
