@@ -17,7 +17,7 @@ jobs:
           paths:
             - vendor
       - run: composer validate --strict
-      - run: vendor/bin/parallel-lint --short src test
+      - run: vendor/bin/parallel-lint --short src tests
       - run: vendor/bin/security-checker security:check
       - run: mkdir ~/reports
       - run: vendor/bin/phpunit --log-junit ~/reports/phpunit.xml
@@ -54,7 +54,7 @@ workflows:
   security-check:
     triggers:
       - schedule:
-          cron: "25 14 * * *"
+          cron: "37 12 * * *"
           filters:
             branches:
               only: master
