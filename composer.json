@@ -1,5 +1,6 @@
 {
     "name": "workshop/demo",
+    "description": "simple circleci project",
     "require-dev": {
         "phpunit/phpunit": "^7.5",
         "jakub-onderka/php-parallel-lint": "^1.0",
