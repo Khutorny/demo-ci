@@ -1,0 +1,21 @@
+{
+    "name": "workshop/demo",
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "authors": [
+        {
+            "name": "v.khutorny",
+            "email": "khutorny@gmail.com"
+        }
+    ],
+    "require" : {
+	"php" : ">=7.1"
+
+    },
+    "autoload" : {
+	"psr-4" : {
+		"Demo\\" : "src/"
+	}
+    }
+}
