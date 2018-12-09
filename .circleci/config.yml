@@ -17,7 +17,7 @@ jobs:
           paths:
             - vendor
       - run: composer validate --strict
-      - run: vendor/bin/parallel-lint --short src tests
+      - run: vendor/bin/parallel-lint --short src test
       - run: vendor/bin/security-checker security:check
       - run: mkdir ~/reports
       - run: vendor/bin/phpunit --log-junit ~/reports/phpunit.xml
@@ -28,4 +28,36 @@ jobs:
       - store-artifacts:
           path: ~/outputs
 
+  security-check:
+    docker:
+      - image: circleci/php:7.1-apache-stretch-browsers
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-php-vendor-{{ checksum "composer.lock" }}
+            - v1-php-vendor-
+
+      - run: composer install
+      - save_cache:
+          key: v1-php-vendor-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run: vendor/bin/security-checker security:check
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  security-check:
+    triggers:
+      - schedule:
+          cron: "25 14 * * *"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - security-check
 

@@ -6,6 +6,7 @@
         "jakub-onderka/php-parallel-lint": "^1.0",
         "sensiolabs/security-checker": "^5.0"
     },
+    "license": "MIT",
     "authors": [
         {
             "name": "v.khutorny",
