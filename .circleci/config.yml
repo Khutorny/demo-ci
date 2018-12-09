@@ -51,9 +51,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-          - v1-node-modules-{{ checksum "package-lock.json" }}
-          - v1-node-modules-
+          keys:
+            - v1-node-modules-{{ checksum "package-lock.json" }}
+            - v1-node-modules-
 
       - run: npm install
       - save_cache:
