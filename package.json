@@ -1,0 +1,8 @@
+{
+  "scripts" : {
+    "scss": "node-sass scss -o css"
+  },
+  "dependencies" : {
+    "node-sass" : "*"
+  }
+}
