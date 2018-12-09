@@ -6,5 +6,22 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-php-vendor-{{ checksum "composer.lock" }}
+            - v1-php-vendor-
       - run: composer install
-      - run: vendor/bin/phpunit
+      - save_cache:
+          key: v1-php-vendor-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run: mkdir ~/reports
+      - run: vendor/bin/phpunit --log-junit ~/reports/phpunit.xml
+      - store-test-results:
+          path: ~/reports
+      - run: mkdir ~/outputs
+      - run: echo "this is a log message" > ~/outputs/message.log
+      - store-artifacts:
+          path: ~/outputs
+
+
