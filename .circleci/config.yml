@@ -10,11 +10,14 @@ jobs:
           keys:
             - v1-php-vendor-{{ checksum "composer.lock" }}
             - v1-php-vendor-
+      - run: composer validate --strict
       - run: composer install
       - save_cache:
           key: v1-php-vendor-{{ checksum "composer.lock" }}
           paths:
             - vendor
+      - run: vendor/bin/parallel-lint --short src tests
+      - run: vendor/bin/security-checker security:check
       - run: mkdir ~/reports
       - run: vendor/bin/phpunit --log-junit ~/reports/phpunit.xml
       - store-test-results:
