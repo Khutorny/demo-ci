@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.1-apache-stretch-browsers
+      - image: circleci/php:7.4.23-apache-buster-node-browsers-legacy
 
     steps:
       - checkout
@@ -29,7 +29,7 @@ jobs:
 
   security-check:
     docker:
-      - image: circleci/php:7.1-apache-stretch-browsers
+      - image: circleci/php:7.4.23-apache-buster-node-browsers-legacy
 
     steps:
       - checkout
@@ -43,7 +43,7 @@ jobs:
           key: v1-php-vendor-{{ checksum "composer.lock" }}
           paths:
             - vendor
-      - run: vendor/bin/security-checker security:check
+      - run: local-php-security-checker
 
   npm-build:
     docker:
