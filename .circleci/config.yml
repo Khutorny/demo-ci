@@ -43,7 +43,7 @@ jobs:
           key: v1-php-vendor-{{ checksum "composer.lock" }}
           paths:
             - vendor
-      - run: local-php-security-checker
+      - run: sh local-php-security-checker
 
   npm-build:
     docker:
