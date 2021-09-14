@@ -27,24 +27,6 @@ jobs:
       - store-artifacts:
           path: ~/outputs
 
-  security-check:
-    docker:
-      - image: circleci/php:7.4.23-apache-buster-node-browsers-legacy
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-php-vendor-{{ checksum "composer.lock" }}
-            - v1-php-vendor-
-
-      - run: composer install
-      - save_cache:
-          key: v1-php-vendor-{{ checksum "composer.lock" }}
-          paths:
-            - vendor
-      - run: sh local-php-security-checker
-
   npm-build:
     docker:
       - image: circleci/node:9
