@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.1-apache-stretch-browsers
+      - image: circleci/php:7.4.23-apache-buster-node-browsers-legacy
 
     steps:
       - checkout
@@ -27,24 +27,6 @@ jobs:
       - store-artifacts:
           path: ~/outputs
 
-  security-check:
-    docker:
-      - image: circleci/php:7.1-apache-stretch-browsers
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-php-vendor-{{ checksum "composer.lock" }}
-            - v1-php-vendor-
-
-      - run: composer install
-      - save_cache:
-          key: v1-php-vendor-{{ checksum "composer.lock" }}
-          paths:
-            - vendor
-      - run: vendor/bin/security-checker security:check
-
   npm-build:
     docker:
       - image: circleci/node:9
@@ -62,22 +44,10 @@ jobs:
             - node-modules
       - run: npm run scss
 
-
-
 workflows:
   version: 2
   commit:
     jobs:
       - build
-      - security-check
       - npm-build
-  security-check:
-    triggers:
-      - schedule:
-          cron: "37 12 * * *"
-          filters:
-            branches:
-              only: master
-    jobs:
-      - security-check
 
